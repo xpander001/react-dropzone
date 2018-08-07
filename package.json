@@ -1,5 +1,5 @@
 {
-  "name": "react-dropzone",
+  "name": "@xpander001/react-dropzone",
   "description": "Simple HTML5 drag-drop zone with React.js",
   "main": "dist/index.js",
   "module": "dist/es/index.js",
@@ -55,7 +55,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/react-dropzone/react-dropzone.git"
+    "url": "https://github.com/xpander001/react-dropzone.git"
   },
   "bugs": {
     "url": "https://github.com/react-dropzone/react-dropzone/issues"
