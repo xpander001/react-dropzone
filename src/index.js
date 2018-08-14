@@ -146,10 +146,6 @@ class Dropzone extends React.Component {
   }
 
   onInputFocus(evt) {
-    const { onFocus } = this.props
-    if (onFocus) {
-      onFocus()
-    }
     evt.preventDefault()
     this.setState({
       isFocused: true
@@ -157,10 +153,6 @@ class Dropzone extends React.Component {
   }
 
   onInputBlur(evt) {
-    const { onBlur } = this.props
-    if (onBlur) {
-      onBlur()
-    }
     evt.preventDefault()
     this.setState({
       isFocused: false
@@ -452,10 +444,10 @@ class Dropzone extends React.Component {
       >
         {this.renderChildren(children, isDragActive, isDragAccept, isDragReject)}
         <input
-          onFocus={this.composeHandlers(this.onInputFocus)}
-          onBlur={this.composeHandlers(this.onInputBlur)}
           {...inputProps /* expand user provided inputProps first so inputAttributes override them */}
           {...inputAttributes}
+          onFocus={this.composeHandlers(this.onInputFocus)}
+          onBlur={this.composeHandlers(this.onInputBlur)}
         />
       </div>
     )
@@ -589,16 +581,6 @@ Dropzone.propTypes = {
    * onDrop callback
    */
   onDrop: PropTypes.func,
-
-  /**
-   * onFocus callback
-   */
-  onFocus: PropTypes.func,
-
-  /**
-   * onBlur callback
-   */
-  onBlur: PropTypes.func,
 
   /**
    * onDropAccepted callback
