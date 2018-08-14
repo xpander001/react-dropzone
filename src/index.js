@@ -146,6 +146,10 @@ class Dropzone extends React.Component {
   }
 
   onInputFocus(evt) {
+    const { onFocus } = this.props
+    if (onFocus) {
+      onFocus()
+    }
     evt.preventDefault()
     this.setState({
       isFocused: true
@@ -153,6 +157,10 @@ class Dropzone extends React.Component {
   }
 
   onInputBlur(evt) {
+    const { onBlur } = this.props
+    if (onBlur) {
+      onBlur()
+    }
     evt.preventDefault()
     this.setState({
       isFocused: false
@@ -562,6 +570,11 @@ Dropzone.propTypes = {
   rejectStyle: PropTypes.object,
 
   /**
+   * CSS styles to apply when the input is focused
+   */
+  focusStyle: PropTypes.object,
+
+  /**
    * CSS styles to apply when dropzone is disabled
    */
   disabledStyle: PropTypes.object,
@@ -576,6 +589,16 @@ Dropzone.propTypes = {
    * onDrop callback
    */
   onDrop: PropTypes.func,
+
+  /**
+   * onFocus callback
+   */
+  onFocus: PropTypes.func,
+
+  /**
+   * onBlur callback
+   */
+  onBlur: PropTypes.func,
 
   /**
    * onDropAccepted callback
