@@ -18,6 +18,8 @@ class Dropzone extends React.Component {
     super(props, context)
     this.composeHandlers = this.composeHandlers.bind(this)
     this.onClick = this.onClick.bind(this)
+    this.onInputFocus = this.onInputFocus.bind(this)
+    this.onInputBlur = this.onInputBlur.bind(this)
     this.onDocumentDrop = this.onDocumentDrop.bind(this)
     this.onDragEnter = this.onDragEnter.bind(this)
     this.onDragLeave = this.onDragLeave.bind(this)
@@ -141,6 +143,20 @@ class Dropzone extends React.Component {
     if (this.props.onDragLeave) {
       this.props.onDragLeave.call(this, evt)
     }
+  }
+
+  onInputFocus(evt) {
+    evt.preventDefault()
+    this.setState({
+      isFocused: true
+    })
+  }
+
+  onInputBlur(evt) {
+    evt.preventDefault()
+    this.setState({
+      isFocused: false
+    })
   }
 
   onDrop(evt) {
@@ -304,6 +320,7 @@ class Dropzone extends React.Component {
     let {
       acceptStyle,
       activeStyle,
+      focusStyle,
       className = '',
       disabledStyle,
       rejectStyle,
@@ -311,7 +328,7 @@ class Dropzone extends React.Component {
       ...props // eslint-disable-line prefer-const
     } = rest
 
-    const { isDragActive, draggedFiles } = this.state
+    const { isDragActive, draggedFiles, isFocused } = this.state
     const filesCount = draggedFiles.length
     const isMultipleAllowed = multiple || filesCount <= 1
     const isDragAccept = filesCount > 0 && allFilesAccepted(draggedFiles, this.props.accept)
@@ -337,6 +354,7 @@ class Dropzone extends React.Component {
       activeStyle = styles.active
       acceptStyle = styles.active
       rejectStyle = styles.rejected
+      focusStyle = styles.active
       disabledStyle = styles.disabled
     }
 
@@ -357,6 +375,12 @@ class Dropzone extends React.Component {
       appliedStyle = {
         ...appliedStyle,
         ...rejectStyle
+      }
+    }
+    if (focusStyle && isFocused) {
+      appliedStyle = {
+        ...appliedStyle,
+        ...focusStyle
       }
     }
     if (disabledStyle && disabled) {
@@ -420,6 +444,8 @@ class Dropzone extends React.Component {
       >
         {this.renderChildren(children, isDragActive, isDragAccept, isDragReject)}
         <input
+          onFocus={this.composeHandlers(this.onInputFocus)}
+          onBlur={this.composeHandlers(this.onInputBlur)}
           {...inputProps /* expand user provided inputProps first so inputAttributes override them */}
           {...inputAttributes}
         />
